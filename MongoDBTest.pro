@@ -16,3 +16,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp
+
+
+INCLUDEPATH += $$PWD/Include/mongo
+DEPENDPATH += $$PWD/Include/mongo
+
+PRE_TARGETDEPS += $$PWD/Library/libmongoclient.a
+
+
+LIBS += -L$$PWD/Library/BoostLib/ -lboost_system
