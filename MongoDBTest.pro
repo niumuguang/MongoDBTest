@@ -17,9 +17,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    CTP/md/mdspi.cpp
 
-HEADERS += mainwindow.h
+HEADERS += mainwindow.h \
+    config.h \
+    CTP/md/mdspi.h \
+    CTP/api/trade/linux64/public/ThostFtdcMdApi.h \
+    CTP/api/trade/linux64/public/ThostFtdcTraderApi.h \
+    CTP/api/trade/linux64/public/ThostFtdcUserApiDataType.h \
+    CTP/api/trade/linux64/public/ThostFtdcUserApiStruct.h
 
 FORMS   += mainwindow.ui
 
