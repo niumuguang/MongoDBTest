@@ -31,7 +31,7 @@ private:
     void ReqUserLogin();
     void SubscribeMarketData();
     bool IsErrorRspInfo(CThostFtdcRspInfoField* pRspInfo);
-    CMySQL_Api m_sql;
+    CMySQL_Api* m_sql;
 
 //  CtpMdSpi(CThostFtdcMdApi* api):pUserApi(api){};
 //	///´íÎóÓ¦´ð

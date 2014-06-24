@@ -148,13 +148,14 @@ void CtpMdSpi::OnHeartBeatWarning(int nTimeLapse)
 void CtpMdSpi::OnFrontConnected()
 {
     cerr << "--->>>" << "OnFrontConnected" << endl;
+    m_sql = new CMySQL_Api("localhost",3306,"root", "niumuguang", "FutureDB","ag1409");
     ReqUserLogin();
 }
 
 void CtpMdSpi::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserLogin, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast)
 {
     cerr << "--->>> " << "OnRspUserLogin" << endl;
-    &m_sql = new CMySQL_Api()
+
     if(bIsLast && !IsErrorRspInfo(pRspInfo))
     {
         cerr << "--->>> get trade date = " << pUserApi->GetTradingDay() << endl;
@@ -174,12 +175,8 @@ void CtpMdSpi::OnRspUnSubMarketData(CThostFtdcSpecificInstrumentField *pSpecific
 
 void CtpMdSpi::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData)
 {
-    //CMySQL_Api m_sql("root","niumuguang","FutureDB","ag1409 ");
-    //m_sql.Testing();
-
+    m_sql->WriteDB(pDepthMarketData);
     cerr << "-------------------------------------------------------------------" << endl;
-//    cerr << "Last Price: " << pDepthMarketData->LastPrice << endl;
-//    cerr << "Time: " << pDepthMarketData->UpdateTime << endl;
     cerr << "AskPrice1:" << pDepthMarketData->AskPrice1 << endl;
     cerr << "BidPrice1:" << pDepthMarketData->BidPrice1 << endl;
     cerr << "AskVolume1:" << pDepthMarketData->AskVolume1 << endl;
