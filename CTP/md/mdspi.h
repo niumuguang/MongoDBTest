@@ -2,7 +2,9 @@
 #define MD_SPI_H_
 //#pragma once
 //#include "api/trade/win/public/ThostFtdcMdApi.h"
-#include "CTP/api/trade/linux64/public/ThostFtdcMdApi.h"
+#include "CTP/api/trade/win/public/ThostFtdcMdApi.h"
+
+#include <cmysql_api.h>
 
 
 class CtpMdSpi : public CThostFtdcMdSpi
@@ -29,6 +31,8 @@ private:
     void ReqUserLogin();
     void SubscribeMarketData();
     bool IsErrorRspInfo(CThostFtdcRspInfoField* pRspInfo);
+    CMySQL_Api m_sql;
+
 //  CtpMdSpi(CThostFtdcMdApi* api):pUserApi(api){};
 //	///´íÎóÓ¦´ð
 //	virtual void OnRspError(CThostFtdcRspInfoField *pRspInfo,
