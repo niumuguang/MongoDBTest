@@ -3,8 +3,11 @@
 #include <iostream>
 #include <string.h>
 #include <boost/timer.hpp>
-#include <mongo/client/dbclient.h>
-#include <mongo/client/connpool.h>
+//#include "./Include/boost/timer.hpp"
+//#include <mongo/client/dbclient.h>
+//#include <mongo/client/connpool.h>
+//#include "./Include/mongo/client/dbclient.h"
+
 #include "CTP/md/mdspi.h"
 #include "mainwindow.h"
 
@@ -28,8 +31,8 @@ char FRONT_ADDR[] = "tcp://asp-sim2-md1.financial-trading-platform.com:26213";
 TThostFtdcBrokerIDType BROKER_ID = "2030";
 TThostFtdcInvestorIDType INVESTOR_ID = "00092";
 TThostFtdcPasswordType PASSWORD = "888888";
-char *ppInstrumentID[] = {"ag1412"};
-int iInstrumentID = 1;
+char *ppInstrumentID[] = {"ag1412","i1501","ag1409","i1409"};
+int iInstrumentID = 4;
 int iRequestID = 0;
 
 //*******************************************************************//

@@ -1,5 +1,17 @@
 #ifndef MD_CONFIG_H_
 #define MD_CONFIG_H_
+
+#define HOST "localhost"
+////#define USER "lio"
+////#define DatabaseUSER "lio"
+//#define USER "root"
+//#define PORT 3306
+////#define PASSWD "root"
+//#define PASSWD "niumuguang"
+//#define DBNAME "FutureDB"
+//#define CHARSET "utf8"
+////#define STANDARDIP "116.236.239.129"
+
 #pragma once
 
 //«Î«Û±‡∫≈
@@ -18,6 +30,6 @@ char riskFront[] ="tcp://asp-sim1-front1.financial-trading-platform.com:50001";
 
 
 
-
-
 #endif
+
+

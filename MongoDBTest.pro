@@ -19,7 +19,8 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     CTP/md/mdspi.cpp \
-    cmysql_api.cpp
+    cmysql_api.cpp \
+    chstimer.cpp
 
 HEADERS += mainwindow.h \
     config.h \
@@ -28,7 +29,9 @@ HEADERS += mainwindow.h \
     CTP/api/trade/win/public/ThostFtdcTraderApi.h \
     CTP/api/trade/win/public/ThostFtdcUserApiDataType.h \
     CTP/api/trade/win/public/ThostFtdcUserApiStruct.h \
-    cmysql_api.h
+    cmysql_api.h \
+    CShareFun.h \
+    chstimer.h
 
 FORMS   += mainwindow.ui
 

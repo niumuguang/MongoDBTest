@@ -1,9 +1,10 @@
 #include "cmysql_api.h"
 
 #include <CTP/api/trade/win/public/ThostFtdcUserApiStruct.h>
-
+//#include "CShareFun.h"
 #include <qstring.h>
-
+#include <chstimer.h>
+//#include <config.h>
 using namespace std;
 
 CMySQL_Api::CMySQL_Api()
@@ -68,21 +69,15 @@ int CMySQL_Api::Testing()
 }
 
 
-//string sql = "insert into ag1409 (InstrumentID,TradingDay,UpdateTime,UpdateMillisec" +
-//        ",LastPrice,AskPrice1,BidPrice1,AskVolume1,BidVolume1,AskPrice2" +
-//        ",BidPrice2,AskVolume2,BidVolume2,AskPrice3,BidPrice3,AskVolume3," +
-//        "BidVolume3,AskPrice4,BidPrice4,AskVolume4,BidVolume4,AskPrice5," +
-//        "BidPrice5,AskVolume5,BidVolume5,AveragePrice,ClosePrice,CurrDelta," +
-//        "ExchangeID,ExchangeInstID,HighestPrice,LowestPrice,UpperLimitPrice," +
-//        "LowerLimitPrice,OpenInterest,OpenPrice,PreClosePrice,PreDelta,PreOpenInterest," +
-//        "PreSettlementPrice,Volume" +
-//        ") values "+
-//,ExchangeID,ExchangeInstID,HighestPrice,LowestPrice,UpperLimitPrice,LowerLimitPrice,OpenInterest,OpenPrice,PreClosePrice,PreDelta,PreOpenInterest,PreSettlementPrice,Volume
-//,ExchangeID,ExchangeInstID,HighestPrice,LowestPrice,UpperLimitPrice,LowerLimitPrice,OpenInterest,OpenPrice,PreClosePrice,PreDelta,PreOpenInterest,PreSettlementPrice,Volume
-//,LowestPrice,UpperLimitPrice,LowerLimitPrice,OpenInterest,OpenPrice,PreClosePrice,PreDelta,PreOpenInterest,PreSettlementPrice,Volume
 bool CMySQL_Api::WriteDB(CThostFtdcDepthMarketDataField *DepthMarketData)
 {
-    string sq = "insert into ag1409 (InstrumentID,TradingDay,UpdateTime,UpdateMillisec,LastPrice,AskPrice1,BidPrice1,AskVolume1,BidVolume1,AskPrice2,BidPrice2,AskVolume2,BidVolume2,AskPrice3,BidPrice3,AskVolume3,BidVolume3,AskPrice4,BidPrice4,AskVolume4,BidVolume4,AskPrice5,BidPrice5,AskVolume5,BidVolume5,AveragePrice,ClosePrice,CurrDelta,ExchangeID,ExchangeInstID,HighestPrice,LowestPrice,UpperLimitPrice,LowerLimitPrice,OpenInterest,OpenPrice,PreClosePrice,PreDelta,PreOpenInterest,PreSettlementPrice,Volume) values ('" +
+    //HSTime tmpTime;
+    int res = 0;
+    CHSTimer tmpTime(DepthMarketData->TradingDay,DepthMarketData->UpdateTime,
+                     DepthMarketData->UpdateMillisec);
+
+
+    string sq = "insert into "+(string)DepthMarketData->InstrumentID+" (InstrumentID,TradingDay,UpdateTime,UpdateMillisec,LastPrice,AskPrice1,BidPrice1,AskVolume1,BidVolume1,AskPrice2,BidPrice2,AskVolume2,BidVolume2,AskPrice3,BidPrice3,AskVolume3,BidVolume3,AskPrice4,BidPrice4,AskVolume4,BidVolume4,AskPrice5,BidPrice5,AskVolume5,BidVolume5,AveragePrice,ClosePrice,CurrDelta,ExchangeID,ExchangeInstID,HighestPrice,LowestPrice,UpperLimitPrice,LowerLimitPrice,OpenInterest,OpenPrice,PreClosePrice,PreDelta,PreOpenInterest,PreSettlementPrice,Volume) values ('" +
             (string)DepthMarketData->InstrumentID +"','"+DepthMarketData->TradingDay+"','"+
             DepthMarketData->UpdateTime+"'," + this->Int2String(DepthMarketData->UpdateMillisec) +"," +
             this->Int2String(DepthMarketData->LastPrice) + ","+
@@ -101,7 +96,11 @@ bool CMySQL_Api::WriteDB(CThostFtdcDepthMarketDataField *DepthMarketData)
             Double2String(DepthMarketData->PreDelta) + "," + Int2String(DepthMarketData->PreOpenInterest) + "," +
             Int2String(DepthMarketData->PreSettlementPrice) + "," + Int2String(DepthMarketData->Volume) +
             ");";
-    int res = mysql_query(&m_mysql, sq.c_str());
+
+    if(tmpTime.isInTradeTime() == true)
+    {
+        res = mysql_query(&m_mysql, sq.c_str());
+    }
     return (bool)res;
 }
 
@@ -114,18 +113,28 @@ char *CMySQL_Api::String2CharPt(string inputData)
 
 string CMySQL_Api::Int2String(int inputData)
 {
+    string res = "0";
+    if( inputData < -1147480000)
+    {
+        return res;
+    }
     int n = inputData;
     QString qs = QString::number(n, 10);
-    string s = qs.toStdString();
-    return s;
+    res = qs.toStdString();
+    return res;
 }
 
 string CMySQL_Api::Double2String(double inputData)
 {
+    string res = "0";
+    if( inputData < -1147480000 )
+    {
+        return res;
+    }
     double num = inputData;
     QString data = QString("%1").arg(num);
-    string s = data.toStdString();
-    return s;
+    res = data.toStdString();
+    return res;
 }
 
 
